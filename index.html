@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Madama Jee</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Georgia, 'Times New Roman', serif;
+  overflow-x: hidden;
+}
+
+.container {
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Phase 1: Heart Capture */
+#heart-phase {
+  display: block;
+}
+
+#heart-phase h1 {
+  font-family: 'Segoe Script', 'Brush Script MT', cursive;
+  color: #ffd700;
+  font-size: 2em;
+  margin-bottom: 10px;
+  text-shadow: 0 0 20px rgba(255,215,0,0.3);
+}
+
+#heart-phase .subtitle {
+  color: #c9b8ff;
+  font-size: 1.1em;
+  margin-bottom: 30px;
+  font-family: 'Segoe Script', 'Brush Script MT', cursive;
+}
+
+.hearts-container {
+  position: relative;
+  height: 400px;
+  width: 100%;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.floating-heart {
+  position: absolute;
+  font-size: 30px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.1s;
+  animation: floatHeart linear infinite;
+  filter: drop-shadow(0 0 5px rgba(255,0,0,0.3));
+}
+
+.floating-heart:hover { transform: scale(1.3); }
+
+.floating-heart.caught {
+  animation: heartBurst 0.6s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes floatHeart {
+  0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translateY(-400px) rotate(360deg) scale(0.3); opacity: 0; }
+}
+
+@keyframes heartBurst {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(2); opacity: 0.8; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+.counter {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 25px 0;
+}
+
+.heart-slot {
+  width: 50px;
+  height: 50px;
+  border: 2px dashed rgba(255,100,100,0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transition: all 0.3s;
+  background: rgba(255,100,100,0.05);
+}
+
+.heart-slot.filled {
+  border-color: #ff4d4d;
+  background: rgba(255,77,77,0.2);
+  animation: slotPop 0.4s ease;
+  box-shadow: 0 0 15px rgba(255,77,77,0.3);
+}
+
+@keyframes slotPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+.hint-text {
+  color: rgba(255,255,255,0.5);
+  font-family: 'Segoe Script', 'Brush Script MT', cursive;
+  font-size: 1.1em;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Confetti */
+.confetti-piece {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  top: -10px;
+  z-index: 999;
+  animation: confettiFall linear forwards;
+  pointer-events: none;
+}
+
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Phase 2: Celebration */
+#celebration-phase {
+  display: none;
+  animation: fadeInUp 1s ease;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#celebration-phase .cake-section {
+  margin: 20px 0;
+}
+
+.cake-emoji {
+  font-size: 100px;
+  display: block;
+  animation: cakeBounce 2s ease-in-out infinite;
+  filter: drop-shadow(0 10px 20px rgba(255,200,0,0.3));
+}
+
+@keyframes cakeBounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-15px) scale(1.05); }
+}
+
+.firework {
+  display: inline-block;
+  font-size: 40px;
+  animation: fireworkAnim 1.5s ease infinite;
+}
+
+.firework:nth-child(1) { animation-delay: 0s; }
+.firework:nth-child(2) { animation-delay: 0.5s; }
+.firework:nth-child(3) { animation-delay: 1s; }
+
+@keyframes fireworkAnim {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1.5) rotate(180deg); opacity: 0.7; }
+}
+
+.birthday-title {
+  font-family: 'Segoe Script', 'Brush Script MT', cursive;
+  font-size: 3em;
+  background: linear-gradient(45deg, #ffd700, #ff6b6b, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 15px 0;
+  text-shadow: none;
+  animation: shimmer 3s ease-in-out infinite;
+  background-size: 200% 200%;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.name-text {
+  font-family: 'Segoe Script', 'Brush Script MT', cursive;
+  color: #ffb3b3;
+  font-size: 1.8em;
+  margin-bottom: 10px;
+}
+
+/* Envelope */
+.envelope-container {
+  margin: 30px auto;
+  perspective: 1000px;
+  width: 250px;
+  height: 180px;
+  cursor: pointer;
+  position: relative;
+}
+
+.envelope {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.8s ease;
+  transform-style: preserve-3d;
+}
+
+.envelope.open {
+  transform: rotateX(180deg);
+}
+
+.envelope-front, .envelope-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 10px;
+}
+
+.envelope-front {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 30px rgba(255,100,100,0.2);
+  z-index: 2;
+}
+
+.envelope-front .arrow-hint {
+  font-size: 2.5em;
+  animation: arrowBounce 1.5s ease-in-out infinite;
+  margin-bottom: 5px;
+}
+
+.envelope-front .open-text {
+  color: white;
+  font-family: 'Segoe Script', 'Brush Script MT', cursive;
+  font-size: 1.2em;
+  background: rgba(0,0,0,0.2);
+  padding: 5px 20px;
+  border-radius: 20px;
+}
+
+@keyframes arrowBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+.envelope-back {
+  background: #fff5f5;
+  transform: rotateX(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.envelope-back .seal {
+  font-size: 2em;
+}
+
+/* Letter Reveal */
+.letter-content {
+  display: none;
+  margin-top: 20px;
+  padding: 30px;
+  background: linear-gradient(135deg, #fff5f5, #fff0f0);
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2), inset 0 0 50px rgba(255,200,200,0.1);
+  animation: letterReveal 1s ease;
+  border: 1px solid rgba(255,100,100,0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.letter-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff9999' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+@keyframes letterReveal {
+  from { opacity: 0; max-height: 0; padding: 0 30px; transform: translateY(-20px); }
+  to { opacity: 1; max-height: 800px; padding: 30px; transform: translateY(0); }
+}
+
+.letter-content p {
+  font-family: 'Segoe Script', 'Brush Script MT', cursive;
+  font-size: 1.3em;
+  line-height: 1.8;
+  color: #4a1a1a;
+  text-align: left;
+  position: relative;
+  z-index: 1;
+}
+
+.letter-content p:first-child {
+  text-indent: 20px;
+}
+
+.letter-content .signature {
+  font-family: 'Segoe Script', 'Brush Script MT', cursive;
+  font-size: 1.8em;
+  color: #c0392b;
+  text-align: right;
+  margin-top: 20px;
+}
+
+.letter-content .heart-decoration {
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  animation: heartBeat 1s ease-in-out infinite;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.1); }
+}
+
+/* Floating particles in background */
+.particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: -1;
+  animation: particleFloat linear infinite;
+  opacity: 0.15;
+}
+
+@keyframes particleFloat {
+  from { transform: translateY(100vh) rotate(0deg); }
+  to { transform: translateY(-100px) rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .birthday-title { font-size: 2em; }
+  .hearts-container { height: 300px; }
+  .envelope-container { width: 200px; height: 150px; }
+  #heart-phase h1 { font-size: 1.5em; }
+  .letter-content p { font-size: 1.1em; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Phase 1: Heart Capture -->
+  <div id="heart-phase">
+    <h1>mery dil ko pkro</h1>
+    <p class="subtitle">5 bar mery dil ko touch karo gy to surprise mile ga 😚😚😚</p>
+    <div class="hearts-container" id="heartsContainer"></div>
+    <div class="counter" id="heartCounter">
+      <div class="heart-slot" data-index="0"></div>
+      <div class="heart-slot" data-index="1"></div>
+      <div class="heart-slot" data-index="2"></div>
+      <div class="heart-slot" data-index="3"></div>
+      <div class="heart-slot" data-index="4"></div>
+    </div>
+    <div class="hint-text" id="hintText">tap on the floating hearts</div>
+  </div>
+
+  <!-- Phase 2: Celebration -->
+  <div id="celebration-phase">
+    <div class="fireworks-row">
+      <span class="firework">✨</span>
+      <span class="firework">🎆</span>
+      <span class="firework">✨</span>
+    </div>
+    <div class="cake-section">
+      <span class="cake-emoji">🎂</span>
+    </div>
+    <div class="birthday-title">Happy Birthday</div>
+    <div class="name-text">Madama Jee ❤️</div>
+
+    <div class="envelope-container" id="envelopeContainer">
+      <div class="envelope" id="envelope">
+        <div class="envelope-front">
+          <div class="arrow-hint">👇</div>
+          <div class="open-text">open it</div>
+        </div>
+        <div class="envelope-back">
+          <div class="seal">💌</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="letter-content" id="letterContent">
+      <div class="heart-decoration">💖</div>
+      <p>Madama Jee,</p>
+      <p>On this beautiful day, I just wanted to let you know how incredibly special you are. Your smile lights up my world, your laughter is the sweetest melody, and your presence makes everything better.</p>
+      <p>Every moment with you feels like a dream I never want to wake up from. You are the reason my heart smiles, the thought that makes my day brighter, and the one who makes everything meaningful.</p>
+      <p>You deserve all the happiness in the universe, and I hope this day brings you as much joy as you bring to everyone around you.</p>
+      <p>Thank you for being you — wonderful, beautiful, and absolutely amazing.</p>
+      <p class="signature">With all my love,<br>Yours forever ❤️</p>
+      <div class="heart-decoration">💕</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Create background particles
+function createParticles() {
+  const symbols = ['✦', '✧', '⋆', '☆', '·'];
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    p.style.left = Math.random() * 100 + '%';
+    p.style.fontSize = (10 + Math.random() * 20) + 'px';
+    p.style.animationDuration = (10 + Math.random() * 20) + 's';
+    p.style.animationDelay = (Math.random() * 20) + 's';
+    p.style.color = ['#ffd700', '#ff6b6b', '#c9b8ff', '#ffb3b3'][Math.floor(Math.random() * 4)];
+    document.body.appendChild(p);
+  }
+}
+createParticles();
+
+// Heart Capture Game
+const container = document.getElementById('heartsContainer');
+const counter = document.getElementById('heartCounter');
+const hintText = document.getElementById('hintText');
+const slots = counter.querySelectorAll('.heart-slot');
+let heartsCaught = 0;
+let heartInterval;
+let activeHearts = [];
+const heartSymbols = ['❤️', '💕', '💗', '💖', '♥️', '💝'];
+
+function createHeart() {
+  if (heartsCaught >= 5) return;
+  const heart = document.createElement('div');
+  heart.className = 'floating-heart';
+  heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+  heart.style.left = (10 + Math.random() * 75) + '%';
+  heart.style.fontSize = (20 + Math.random() * 25) + 'px';
+  heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+  heart.style.animationDelay = '0s';
+  heart.style.bottom = '-50px';
+  heart.dataset.caught = 'false';
+
+  heart.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (this.dataset.caught === 'true' || heartsCaught >= 5) return;
+    this.dataset.caught = 'true';
+    this.classList.add('caught');
+
+    heartsCaught++;
+    slots[heartsCaught - 1].classList.add('filled');
+
+    // Create mini burst
+    for (let i = 0; i < 5; i++) {
+      const spark = document.createElement('span');
+      spark.textContent = '✨';
+      spark.style.position = 'absolute';
+      spark.style.left = e.clientX - container.getBoundingClientRect().left + 'px';
+      spark.style.top = e.clientY - container.getBoundingClientRect().top + 'px';
+      spark.style.fontSize = '10px';
+      spark.style.pointerEvents = 'none';
+      spark.style.animation = `heartBurst 0.8s ease forwards`;
+      spark.style.animationDelay = (i * 0.05) + 's';
+      container.appendChild(spark);
+      setTimeout(() => spark.remove(), 1000);
+    }
+
+    setTimeout(() => this.remove(), 600);
+
+    if (heartsCaught >= 5) {
+      clearInterval(heartInterval);
+      hintText.textContent = '🎉 All hearts captured!';
+      setTimeout(showCelebration, 500);
+    } else {
+      hintText.textContent = `${heartsCaught}/5 hearts captured! keep going!`;
+    }
+  });
+
+  container.appendChild(heart);
+  activeHearts.push(heart);
+
+  setTimeout(() => {
+    if (heart.parentNode && heart.dataset.caught === 'false') {
+      heart.remove();
+      activeHearts = activeHearts.filter(h => h !== heart);
+    }
+  }, (parseFloat(heart.style.animationDuration) + 2) * 1000);
+}
+
+function startHeartGame() {
+  heartInterval = setInterval(createHeart, 800);
+  for (let i = 0; i < 3; i++) setTimeout(createHeart, i * 400);
+}
+startHeartGame();
+
+// Celebration Phase
+function showCelebration() {
+  document.getElementById('heart-phase').style.display = 'none';
+  document.getElementById('celebration-phase').style.display = 'block';
+  launchConfetti();
+  launchConfetti();
+  setTimeout(launchConfetti, 500);
+  setTimeout(launchConfetti, 1000);
+}
+
+// Confetti
+function launchConfetti() {
+  const colors = ['#ff6b6b', '#ffd700', '#ffb3b3', '#c9b8ff', '#ff9ff3', '#48dbfb', '#ff9f43', '#00d2d3', '#ff4757'];
+  for (let i = 0; i < 40; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.width = (5 + Math.random() * 10) + 'px';
+    piece.style.height = (5 + Math.random() * 10) + 'px';
+    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+    piece.style.animationDuration = (2 + Math.random() * 3) + 's';
+    piece.style.animationDelay = (Math.random() * 0.5) + 's';
+    document.body.appendChild(piece);
+    setTimeout(() => piece.remove(), 5000);
+  }
+}
+
+// Envelope interaction
+const envelope = document.getElementById('envelope');
+const envelopeContainer = document.getElementById('envelopeContainer');
+const letterContent = document.getElementById('letterContent');
+let envelopeOpened = false;
+
+envelopeContainer.addEventListener('click', function() {
+  if (!envelopeOpened) {
+    envelope.classList.add('open');
+    envelopeOpened = true;
+    setTimeout(() => {
+      letterContent.style.display = 'block';
+      launchConfetti();
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }, 800);
+  }
+});
+
+// Prevent hearts from collecting when clicking outside container
+document.addEventListener('click', function(e) {
+  if (!container.contains(e.target) && heartsCaught < 5) {
+    // do nothing
+  }
+});
+</script>
+</body>
+</html>
