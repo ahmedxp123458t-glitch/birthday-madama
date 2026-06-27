@@ -373,6 +373,120 @@ body {
   #heart-phase h1 { font-size: 1.5em; }
   .letter-content p { font-size: 1.1em; }
 }
+
+/* Song Section */
+.song-section {
+  margin-top: 40px;
+  padding: 30px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  display: none;
+}
+
+.bear-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.bear {
+  font-size: 60px;
+  animation: bearBounce 1s ease-in-out infinite;
+}
+
+.bear-arrow {
+  font-size: 40px;
+  animation: arrowPoint 1s ease-in-out infinite;
+}
+
+@keyframes bearBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes arrowPoint {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(10px); opacity: 0.6; }
+}
+
+.play-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.girl-left {
+  font-size: 50px;
+  animation: girlDance 1.5s ease-in-out infinite;
+}
+
+.girl-arrow {
+  font-size: 35px;
+  animation: arrowRight 1s ease-in-out infinite;
+}
+
+@keyframes girlDance {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-5px) scale(1.05); }
+}
+
+@keyframes arrowRight {
+  0%, 100% { transform: translateX(0); opacity: 1; }
+  50% { transform: translateX(8px); opacity: 0.6; }
+}
+
+.play-btn {
+  background: linear-gradient(135deg, #ff6b6b, #ff4d6d);
+  color: white;
+  border: none;
+  padding: 16px 40px;
+  font-size: 1.3em;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: 'Segoe Script', 'Brush Script MT', cursive;
+  box-shadow: 0 5px 25px rgba(255,77,109,0.4);
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.play-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 35px rgba(255,77,109,0.6);
+}
+
+.play-icon {
+  font-size: 1.2em;
+}
+
+.lyrics-box {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 15px;
+  min-height: 60px;
+}
+
+.lyric-line {
+  font-family: 'Georgia', serif;
+  color: #ffd9e6;
+  font-size: 1.1em;
+  line-height: 2;
+  margin: 5px 0;
+  animation: fadeInLyric 2s ease;
+  text-align: center;
+}
+
+@keyframes fadeInLyric {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 </style>
 </head>
 <body>
@@ -434,10 +548,63 @@ body {
       <div class="heart-decoration">💕</div>
     </div>
   </div>
+
+  <!-- Song Section -->
+  <div class="song-section" id="songSection">
+    <div class="bear-row">
+      <span class="bear">🧸</span>
+      <span class="bear-arrow">👇</span>
+    </div>
+    <div class="play-area">
+      <span class="girl-left">👧</span>
+      <span class="girl-arrow">👉</span>
+      <button class="play-btn" id="playBtn"><span class="play-icon">▶️</span> Play Song</button>
+    </div>
+    <div class="lyrics-box" id="lyricsBox">
+      <p class="lyric-line">🎶 Playing your song... 🎶</p>
+    </div>
+    <div id="youtubePlayer"></div>
+  </div>
 </div>
 
 <script>
-// Create background particles
+const tag = document.createElement('script');
+tag.src = 'https://www.youtube.com/iframe_api';
+document.body.appendChild(tag);
+let player;
+
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('youtubePlayer', {
+    height: '0',
+    width: '0',
+    videoId: 'g6EsUKsY45g',
+    playerVars: { autoplay: 0, controls: 0, modestbranding: 1 },
+    events: { 'onStateChange': onPlayerStateChange }
+  });
+}
+
+function onPlayerStateChange(event) {
+  if (event.data === YT.PlayerState.PLAYING) {
+    document.getElementById('playBtn').innerHTML = '<span class="play-icon">⏸️</span> Playing...';
+    document.getElementById('lyricsBox').innerHTML = `
+      <p class="lyric-line">🎶 Tumhari mohabbat mein... 🎶</p>
+      <p class="lyric-line">🎶 Doob jaane ko dil karta hai... 🎶</p>
+      <p class="lyric-line">🎶 Har pal tumhare sang... 🎶</p>
+      <p class="lyric-line">🎶 Guzaarne ko dil karta hai... 🎶</p>
+      <p class="lyric-line">💕💕💕</p>
+    `;
+  }
+  if (event.data === YT.PlayerState.ENDED) {
+    document.getElementById('playBtn').innerHTML = '<span class="play-icon">🔄</span> Play Again';
+  }
+}
+
+document.getElementById('playBtn').addEventListener('click', function() {
+  if (player) {
+    player.playVideo();
+    document.getElementById('songSection').scrollIntoView({ behavior: 'smooth' });
+  }
+});
 function createParticles() {
   const symbols = ['✦', '✧', '⋆', '☆', '·'];
   for (let i = 0; i < 20; i++) {
@@ -532,6 +699,7 @@ startHeartGame();
 function showCelebration() {
   document.getElementById('heart-phase').style.display = 'none';
   document.getElementById('celebration-phase').style.display = 'block';
+  document.getElementById('songSection').style.display = 'block';
   launchConfetti();
   launchConfetti();
   setTimeout(launchConfetti, 500);
